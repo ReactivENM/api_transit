@@ -28,7 +28,7 @@ namespace API.Controllers
                 "entregado"
             };
             if (validStatus.Contains(estado.Estado)) return Ok(Logica.PackageController.UpdatePackageStatus(IdExterno, estado.Estado));
-            else return Ok("El estado no es válido!");
+            else return BadRequest("El estado no es válido!");
         }
     }
 }
