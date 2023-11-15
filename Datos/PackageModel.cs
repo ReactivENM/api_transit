@@ -31,5 +31,24 @@ namespace Datos
             return null;
 
         }
+
+        public string UpdatePackageStatus(string IdExterno, string newStatus)
+        {
+            this.Command.CommandText = $"SELECT * FROM paquete WHERE id_externo = '{IdExterno}'";
+            this.Reader = this.Command.ExecuteReader();
+            if (this.Reader.HasRows)
+            {
+                this.Reader.Close();
+
+                this.Command.CommandText = $"UPDATE paquete SET " +
+                    $"estado = '{newStatus}' " +
+                    $"WHERE id_externo = '{IdExterno}'";
+
+                this.Command.ExecuteNonQuery();
+
+                return "Estado del paquete actualizado!";
+            }
+            return "El paquete no existe!";
+        }
     }
 }

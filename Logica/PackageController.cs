@@ -16,5 +16,10 @@ namespace Logica
             return p.GetPackageStatus(idExterno);
         }
 
+        public static string UpdatePackageStatus(string IdExterno, string newStatus)
+        {
+            PackageModel p = new PackageModel();
+            return p.UpdatePackageStatus(IdExterno, newStatus);
+        }
     }
 }
