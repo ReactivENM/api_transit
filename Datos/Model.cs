@@ -1,24 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MySqlConnector;
 
 namespace Datos
 {
-    public class Model
+    public class Model : IDisposable
     {
         protected string DatabaseIp;
         protected string DatabaseUser;
         protected string DatabasePassword;
         protected string DatabaseName;
 
-        protected MySqlConnection Connection;
-        protected MySqlCommand Command;
-        protected MySqlDataReader Reader;
+        public MySqlConnection Connection;
+        public MySqlCommand Command;
+        public MySqlDataReader Reader;
 
-        protected Model()
+        public Model()
         {
             this.DatabaseIp = "localhost";
             this.DatabaseUser = "root";
@@ -36,6 +32,22 @@ namespace Datos
 
             this.Command = new MySqlCommand();
             this.Command.Connection = this.Connection;
+        }
+
+        // Implementación de IDisposable
+        public void Dispose()
+        {
+            try
+            {
+                Command?.Dispose();
+                Reader?.Dispose();
+                Connection?.Dispose();
+            }
+            catch (Exception ex)
+            {
+                // Manejar excepciones, por ejemplo, registrarlas o lanzarlas nuevamente si es necesario.
+                Console.WriteLine($"Error al liberar recursos: {ex.Message}");
+            }
         }
     }
 }
